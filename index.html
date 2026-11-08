@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>プリキュア深層パーソナリティ＆相性診断</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- React & ReactDOM -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <!-- Babel (ブラウザ内でJSXを動かすため) -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'M PLUS Rounded 1c', sans-serif;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in {
+      animation: fadeIn 0.35s ease-out forwards;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-pink-50 via-purple-50 to-sky-50 min-h-screen text-slate-800">
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useMemo, useRef } = React;
+
+    // ---------------------------------------------------------------------------
+    // 6軸の定義
+    // ---------------------------------------------------------------------------
+    const AXES = [
+      { key: 'action', label: '行動・突破力', short: '行動力', desc: '困難に立ち向かう勇気・直感的な一歩・リーダーシップ' },
+      { key: 'empathy', label: '共感・慈愛', short: '共感力', desc: '他者の痛みに寄り添う優しさ・包み込む温かさ・絆を育む力' },
+      { key: 'intellect', label: '知性・探究心', short: '知性', desc: '冷静な分析力・知的好奇心・物事の本質を見抜く洞察力' },
+      { key: 'passion', label: '表現・情熱', short: '表現力', desc: '自分の「好き」を貫く情熱・創造性・周りを照らす輝き' },
+      { key: 'duty', label: '責任・守護力', short: '守護力', desc: '大切なものや約束を最後まで守り抜く誠実さ・気高さ・芯の強さ' },
+      { key: 'harmony', label: '柔軟・受容力', short: '受容力', desc: '多様性や変化をそのまま受け入れる器・自然体のマイペースさ' },
+    ];
+
+    // ---------------------------------------------------------------------------
+    // プリキュア データベース (85名以上収録)
+    // stats: [action, empathy, intellect, passion, duty, harmony] (1〜10)
+    // ---------------------------------------------------------------------------
+    const PRECURE_LIST = [
+      // ふたりはプリキュア / MaxHeart
+      { id: 'black', name: 'キュアブラック', civilian: '美墨なぎさ', series: 'ふたりはプリキュア', color: '#ec4899', stats: [10, 7, 5, 8, 9, 6], tags: ['直感アタッカー', '仲間思い', 'スポーツ万能', '正義感'], quote: 'ぶっちゃけありえない！でも、やるっきゃない！', bio: '考えるよりも先に体が動く圧倒的な突破力と、大切な友達のためならどんな困難にも立ち向かう熱いハートの持ち主。' },
+      { id: 'white', name: 'キュアホワイト', civilian: '雪城ほのか', series: 'ふたりはプリキュア', color: '#38bdf8', stats: [6, 9, 10, 6, 9, 8], tags: ['博識', 'おっとり芯が強い',
